@@ -1,0 +1,6 @@
+line-length = 100
+extend-exclude = ["*/migrations/*"]
+
+[lint]
+# RUF012 flags Django/DRF's idiomatic class-attribute lists (Meta.fields, permission_classes).
+ignore = ["RUF012"]
