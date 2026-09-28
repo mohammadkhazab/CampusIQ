@@ -51,3 +51,15 @@ def test_course_list_query_count_does_not_grow_with_rows(auth_client: APIClient)
     assert resp.data["results"][0]["category_name"]
     # One category per course, so an N+1 would add 10 queries here.
     assert len(large) == len(small)
+
+
+@pytest.mark.django_db
+def test_deleting_category_with_courses_is_refused(auth_client: APIClient) -> None:
+    """A category in use can't be deleted: clear 409, and its courses survive."""
+    make_courses(1, prefix="A")
+    category = Category.objects.get()
+
+    resp = auth_client.delete(f"/api/categories/{category.id}/")
+
+    assert resp.status_code == 409
+    assert Course.objects.filter(category=category).exists()
