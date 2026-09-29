@@ -6,7 +6,7 @@ Guidance for Claude Code when working in this repo. Read this fully before actin
 
 ## Current stage
 
-> **STAGE: 1 — complete (awaiting review).** Update this line as you go (e.g. "STAGE 3 — in progress").
+> **STAGE: 2 — complete (awaiting review).** Update this line as you go (e.g. "STAGE 3 — in progress").
 > Only work on the current stage. Do not start the next stage until I say so.
 
 ---

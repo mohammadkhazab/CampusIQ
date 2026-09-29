@@ -39,3 +39,25 @@ Migrations are generated code; RUF012 flags Django's idiomatic `Meta.fields`/`pe
 
 *Deferred (Stage 1):* filtering/search on the course list, API schema/docs (drf-spectacular),
 CORS (needed in Stage 2 when Angular calls the API).
+
+## Stage 2 — Angular shell
+
+**Same-origin API via the dev-server proxy, not CORS.**
+`ng serve` proxies `/api` to Django (`frontend/proxy.conf.json`), so the browser only sees one
+origin and the backend needs no CORS config or new dependency. Services call relative `/api/...`
+URLs, which keeps working in Stage 5 if Django (or a reverse proxy) serves the built SPA.
+*Deferred:* `django-cors-headers`, only if the SPA is ever hosted on a separate origin.
+
+**JWT handling: functional interceptor, access token only, localStorage.**
+The interceptor adds `Bearer <access>` only to `/api/` URLs (never third-party hosts, never the
+token endpoint), and on a 401 clears the token and routes to `/login`. localStorage keeps the
+session across reloads; the trade-off is XSS exposure, mitigated by the 15-minute access lifetime.
+The route guard is UX only — the backend enforces auth on every call.
+*Deferred:* silent refresh with the refresh token (users re-login after 15 min), httpOnly-cookie auth.
+
+**Frontend shape: standalone components, signals, inline templates, no UI library.**
+Current Angular defaults with the least ceremony; three screens (login, course list, course detail).
+Typed `Course`/`Category`/`Page<T>` models mirror the DRF serializers and pagination envelope.
+One spec covers the interceptor (token attached, not leaked, 401 → logout), since that is what
+would silently break auth.
+*Deferred:* category browsing/filtering, create/edit forms, styling.
