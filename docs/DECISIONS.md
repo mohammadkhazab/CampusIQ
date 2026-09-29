@@ -14,6 +14,7 @@ Short access token (15 min) plus a 1-day refresh token, both configurable via en
 **Data model: `Category` 1—N `Course`, `on_delete=PROTECT`.**
 Deleting a category that still has courses is refused rather than cascading, because silently
 wiping a catalog is worse than an error. `Course.code` is unique (the natural key students use).
+The API maps that refusal to `409 Conflict` with a message (found in local testing: it was a 500).
 *Deferred:* prerequisites, terms/sections, instructors.
 
 **N+1: `select_related("category")` on the course queryset.**
