@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { CatalogService } from '../core/catalog.service';
 import { Course, Page } from '../core/models';
 
+/** Course catalog at /courses: a paged table of courses, each linking to its detail view. */
 @Component({
   selector: 'app-course-list',
   imports: [RouterLink],
@@ -43,14 +44,21 @@ import { Course, Page } from '../core/models';
 export class CourseList implements OnInit {
   private readonly catalog = inject(CatalogService);
 
+  /** The current page from the API; null until the first response arrives (shows "Loading…"). */
   protected readonly data = signal<Page<Course> | null>(null);
+  /** The page number currently displayed, used by the Previous/Next buttons. */
   protected readonly pageNo = signal(1);
   protected readonly error = signal('');
 
+  /** Loads the first page when the view opens. */
   ngOnInit(): void {
     this.load(1);
   }
 
+  /**
+   * Fetches the given page and shows it. The page number only advances once the
+   * request succeeds, so a failed load never leaves the counter out of sync.
+   */
   load(page: number): void {
     this.catalog.listCourses(page).subscribe({
       next: (data) => {

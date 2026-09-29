@@ -25,6 +25,7 @@ describe('authInterceptor', () => {
 
   afterEach(() => backend.verify());
 
+  /** Logs in through the real AuthService, answering the token request with a fake token "abc". */
   function signIn(): void {
     TestBed.inject(AuthService).login('alice', 'pw').subscribe();
     backend.expectOne('/api/token/').flush({ access: 'abc', refresh: 'r' });

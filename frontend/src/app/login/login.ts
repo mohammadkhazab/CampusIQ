@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../core/auth.service';
 
+/** Sign-in screen at /login: collects credentials and obtains a JWT via AuthService. */
 @Component({
   selector: 'app-login',
   imports: [FormsModule],
@@ -27,11 +28,15 @@ export class Login {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
 
+  // Two-way bound to the form inputs via ngModel.
   username = '';
   password = '';
+  /** True while the login request is in flight; disables the button to prevent double submits. */
   protected readonly busy = signal(false);
+  /** Message shown under the form when login fails; empty when there is nothing to show. */
   protected readonly error = signal('');
 
+  /** Attempts login; on success goes to the course list, on failure shows why. */
   submit(): void {
     this.busy.set(true);
     this.error.set('');
