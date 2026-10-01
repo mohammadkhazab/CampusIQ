@@ -110,6 +110,69 @@ docker compose up --build
 - **Tests:** every stage from 3 on adds at least one real test. Don't test framework code;
   test the behaviour that would embarrass me if it broke.
 
+
+## System Documentation
+
+At the end of each implementation stage, update `SYSTEM_DESIGN.md` to reflect the current state of the application.
+
+The goal is to help me understand what has been built without needing to read every file.
+
+For each completed stage:
+
+- Explain the overall architecture at a high level.
+- Describe the main components/modules and their responsibilities.
+- Explain how the components interact with each other.
+- Describe the main request and data flows.
+- List important APIs, services, databases, authentication, and external integrations.
+- Mention important folders/files only when they are useful for understanding the architecture.
+- Explain important design decisions and patterns used.
+- Clearly state what has been completed and what remains for later stages.
+
+Include Mermaid diagrams where useful, especially:
+
+1. A system/component architecture diagram.
+2. A main request/data-flow diagram.
+3. Additional diagrams only when they make the architecture easier to understand.
+
+Keep the documentation practical and high-level. Do not document every class, method, or file.
+
+`SYSTEM_DESIGN.md` should be treated as living documentation. Update it after every stage rather than creating a new document.
+
+Before marking a stage as complete, make sure `SYSTEM_DESIGN.md` accurately represents the code that actually exists at that point.
+
+# System Design
+
+## Current Implementation Status
+
+## Architecture Overview
+
+## Components
+### Frontend
+### Backend
+### ...
+
+## Component Interactions
+
+## Request / Data Flow
+
+## APIs and Interfaces
+
+## Data Storage
+
+## Authentication
+
+## Architecture Diagram
+[Mermaid]
+
+## Data Flow Diagram
+[Mermaid]
+
+## Key Design Decisions
+
+## Implemented So Far
+
+## Remaining Stages
+
 ---
 
 ## Build stages
